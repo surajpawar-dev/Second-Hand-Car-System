@@ -30,34 +30,51 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/v1/auth/register",
-                                "/api/v1/auth/login",
-                                "/api/v1/auth/getMessage",
-                                "/api/v1/auth/user",
-                                "/api/v1/auth/content-manager-register",
-                                "/api/v1/auth/blog-manager-register"
-                                ,"/api/v1/s3/upload"
-                        ).permitAll()
-                        .requestMatchers("/api/v1/car/add-car",
-                                "/api/v1/car/all-cars",
-                                "/api/v1/car/delete-car",
-                                "/api/v1/car/update-car",
-                                "/api/v1/car/get-car-by-id"
-                        ).hasRole("CONTENT_MANAGER")
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .csrf(csrf -> csrf.disable())
+//                .cors(cors -> cors.disable())
+////                .authorizeHttpRequests(auth -> auth
+////                        .requestMatchers(
+////                                "/api/v1/auth/register",
+////                                "/api/v1/auth/login",
+////                                "/api/v1/auth/getMessage",
+////                                "/api/v1/auth/user",
+////                                "/api/v1/auth/content-manager-register",
+////                                "/api/v1/auth/blog-manager-register",
+////                                "/api/v1/s3/upload",
+////                                "/api/v1/s3/upload-multiple",
+////                                "/api/v1/carEvaluation"
+////                        ).permitAll()
+////                        .requestMatchers("/api/v1/car/add-car",
+////                                "/api/v1/car/all-cars",
+////                                "/api/v1/car/delete-car",
+////                                "/api/v1/car/update-car",
+////                                "/api/v1/car/get-car-by-id"
+////                        ).hasRole("CONTENT_MANAGER")
+////                        .anyRequest().authenticated()
+////                )
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
+//    }
+
+
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.disable())
+            .authorizeHttpRequests(auth -> auth
+                    .anyRequest().permitAll()
+            )
+            .httpBasic(Customizer.withDefaults())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
+}
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

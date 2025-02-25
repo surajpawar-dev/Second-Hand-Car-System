@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/s3")
 
@@ -20,5 +22,11 @@ public class S3Controller {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         String fileUrl = s3Service.uploadFile(file);
         return ResponseEntity.ok(fileUrl); // Returns public URL
+    }
+
+    @PostMapping("/upload-multiple")
+    public ResponseEntity<List<String>> uploadMultipleFiles(@RequestParam("files") List<MultipartFile> files) {
+        List<String> fileUrls = s3Service.uploadMultipleFiles(files);
+        return ResponseEntity.ok(fileUrls); // Returns list of public URLs
     }
 }

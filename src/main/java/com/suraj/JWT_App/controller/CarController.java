@@ -22,9 +22,7 @@ public class CarController {
     @PostMapping("/add-car")
     public ResponseEntity<CarDTO> addCar(@RequestBody CarDTO carDTO){
         // Add car details to database
-
         CarDTO savedDto = carService.addCar(carDTO);
-
         return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
     }
 
