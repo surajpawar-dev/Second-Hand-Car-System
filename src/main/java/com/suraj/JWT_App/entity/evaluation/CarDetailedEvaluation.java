@@ -2,6 +2,9 @@ package com.suraj.JWT_App.entity.evaluation;
 
 import jakarta.persistence.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "car_detailed_evaluation")
 public class CarDetailedEvaluation {
@@ -101,6 +104,17 @@ public class CarDetailedEvaluation {
 
     @Column(name = "year_of_manufacture", nullable = false)
     private int yearOfManufacturing;
+
+    @OneToMany(mappedBy = "carDetailedEvaluation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CarEvaluationPhotos> carEvaluationPhotos = new LinkedHashSet<>();
+
+    public Set<CarEvaluationPhotos> getCarEvaluationPhotos() {
+        return carEvaluationPhotos;
+    }
+
+    public void setCarEvaluationPhotos(Set<CarEvaluationPhotos> carEvaluationPhotos) {
+        this.carEvaluationPhotos = carEvaluationPhotos;
+    }
 
     // Getters and Setters
     public Long getId() {

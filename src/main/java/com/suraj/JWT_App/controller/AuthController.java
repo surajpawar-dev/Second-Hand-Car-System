@@ -19,6 +19,7 @@ public class AuthController {
 
     @GetMapping("/getMessage")
     public ResponseEntity<String> getMessage(){
+
         return ResponseEntity.ok("Success fully developed this...");
     }
 
@@ -48,6 +49,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
+
         return ResponseEntity.ok("Logout Successful");
     }
 }

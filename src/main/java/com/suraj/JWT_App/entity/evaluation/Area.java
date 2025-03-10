@@ -19,28 +19,6 @@ public class Area {
 
     private Long pinCode;
 
-    @OneToMany(mappedBy = "area", orphanRemoval = true)
-    private List<Customer> customers ;
-
-    @OneToMany(mappedBy = "area", orphanRemoval = true)
-    private List<Agent> agents ;
-
-    public List<Agent> getAgents() {
-        return agents;
-    }
-
-    public void setAgents(List<Agent> agents) {
-        this.agents = agents;
-    }
-
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-
     public String getAreaName() {
         return areaName;
     }

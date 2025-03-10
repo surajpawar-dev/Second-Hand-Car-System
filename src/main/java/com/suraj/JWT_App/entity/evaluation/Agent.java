@@ -1,5 +1,6 @@
 package com.suraj.JWT_App.entity.evaluation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;
@@ -27,6 +28,7 @@ public class Agent {
     private Area area;
 
     @OneToMany(mappedBy = "agent", orphanRemoval = true)
+    @JsonIgnore
     private Set<CustomerVisit> customerVisits = new LinkedHashSet<>();
 
     public Set<CustomerVisit> getCustomerVisits() {

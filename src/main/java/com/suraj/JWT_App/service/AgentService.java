@@ -6,10 +6,10 @@ import com.suraj.JWT_App.payload.Evaluation.AgentDTO;
 import com.suraj.JWT_App.repository.evaluation.AgentRepository;
 import com.suraj.JWT_App.repository.evaluation.AreaRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AgentService {
@@ -45,10 +45,21 @@ public class AgentService {
 
 
     // Get all agents
-    public List<AgentDTO> getAllAgents() {
-        return agentRepository.findAll().stream()
-                .map(agent -> modelMapper.map(agent, AgentDTO.class))
-                .collect(Collectors.toList());
+    public Page<Agent> getAllAgents(int page, int size, String sortBy, String sortOrder) {
+        // Sorting and pagination
+
+        Sort.Direction direction = (sortOrder != null && sortOrder.equalsIgnoreCase("DESC"))
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Agent> paginatedResult = agentRepository.findAll(pageRequest);
+        return paginatedResult;
+
+
+//        return agentRepository.findAll().stream()
+//                .map(agent -> modelMapper.map(agent, AgentDTO.class))
+//                .collect(Collectors.toList());
     }
 
     // Get agent by ID
@@ -86,7 +97,6 @@ public class AgentService {
         System.out.println(saved.getId());
         return modelMapper.map(saved, AgentDTO.class);
     }
-
 
 
     // Delete an agent

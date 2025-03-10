@@ -13,9 +13,26 @@ public class CarEvaluationPhotos {
     @Column(name = "photo_url", nullable = false)
     private String photoUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_evaluation_id", nullable = false)
-    private CarDetailedEvaluation carEvaluation;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "car_detailed_evaluation_id")
+    private CarDetailedEvaluation carDetailedEvaluation;
+
+    public CarDetailedEvaluation getCarDetailedEvaluation() {
+        return carDetailedEvaluation;
+    }
+
+    public void setCarDetailedEvaluation(CarDetailedEvaluation carDetailedEvaluation) {
+        this.carDetailedEvaluation = carDetailedEvaluation;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public Long getId() {
         return id;

@@ -1,6 +1,10 @@
 package com.suraj.JWT_App.entity.car_details;
 
+import com.suraj.JWT_App.entity.evaluation.ImageEntity;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cars")
@@ -17,29 +21,40 @@ public class Car {
     @Column(name = "description", length = 500)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "transmission_type_id", nullable = false)
     private TransmissionType transmissionType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "fuel_type_id", nullable = false)
     private FuelType fuelType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "year_of_manufacture_id", nullable = false)
     private YearOfManufacture yearOfManufacture;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "model_id", nullable = false)
     private Model model;
+
+    @OneToMany(mappedBy = "car", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<ImageEntity> imageEntities = new ArrayList<>();
+
+    public List<ImageEntity> getImageEntities() {
+        return imageEntities;
+    }
+
+    public void setImageEntities(List<ImageEntity> imageEntities) {
+        this.imageEntities = imageEntities;
+    }
 
     public Brand getBrand() {
         return brand;
